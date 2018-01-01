@@ -1,120 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-      <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
-
-  <title>Fench-Fama's Factor Model</title>
-
-
-  <meta name="HandheldFriendly" content="True" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="referrer" content="origin" />
-  <meta name="generator" content="Pelican" />
-  <link href="http://kennethchentt.github.io" rel="canonical" />
-
-  <!-- Feed -->
-        <link href="http://kennethchentt.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="QUANTGO's BLOG Full Atom Feed" />
-          <link href="http://kennethchentt.github.io/feeds/finance.atom.xml" type="application/atom+xml" rel="alternate" title="QUANTGO's BLOG Categories Atom Feed" />
-
-  <link href="http://kennethchentt.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
-
-  <!-- Code highlight color scheme -->
-      <link href="http://kennethchentt.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
-
-
-  <!-- Custom fonts -->
-  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-
-    <link href="http://kennethchentt.github.io/first-post.html" rel="canonical" />
-
-        <meta name="description" content="Factor Models¶Alpha, the market excess return, is a measure of the active return on an investment, the performance of that investment...">
-
-        <meta name="author" content="Kenneth Chen">
-
-        <meta name="tags" content="python">
-
-        <meta property="og:locale" content="" />
-    <meta property="og:site_name" content="QUANTGO's BLOG" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="QUANTGO's BLOG" />
-    <meta property="og:description" content="View the blog." />
-    <meta property="og:url" content="http://kennethchentt.github.io" />
-      <meta name="og:image" content="http://kennethchentt.github.io/theme/images/post-bg.jpg">
-
-  <meta property="og:type" content="article">
-            <meta property="article:author" content="http://kennethchentt.github.io/author/kenneth-chen.html">
-  <meta property="og:url" content="http://kennethchentt.github.io/first-post.html">
-  <meta property="og:title" content="Fench-Fama's Factor Model">
-  <meta property="article:published_time" content="2016-06-08 20:00:00+08:00">
-            <meta property="og:description" content="Factor Models¶Alpha, the market excess return, is a measure of the active return on an investment, the performance of that investment...">
-
-            <meta property="og:image" content="http://kennethchentt.github.io/theme/images/post-bg.jpg">
-</head>
-<!-- TODO : Body class -->
-<body class="home-template">
-
-<nav id="menu">
-  <a class="close-button">Close</a>
-  <div class="nav-wrapper">
-    <p class="nav-label">Menu</p>
-    <ul>
-
-
-    </ul>
-  </div>
-</nav>
-    <!-- Progressbar -->
-    <div class="progress-container">
-        <span class="progress-bar"></span>
-    </div>
-
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    <header id="post-header" class="has-cover">
-      <div class="inner">
-        <nav id="navigation">
-            <span id="home-button" class="nav-button">
-                <a class="home-button" href="http://kennethchentt.github.io" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
-            </span>
-          <span id="menu-button" class="nav-button">
-            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
-          </span>
-        </nav>
-        <h1 class="post-title">Fench-Fama's Factor Model</h1>
-        <!-- TODO : Proper class for headline -->
-        <span class="post-meta">
-                <a href="http://kennethchentt.github.io/author/kenneth-chen.html">Kenneth chen</a>
-            | <time datetime="Wed 08 June 2016">Wed 08 June 2016</time>
-        </span>
-        <!-- TODO : Modified check -->
-        
-            <div class="post-cover cover" style="background-image: url('http://kennethchentt.github.io/theme/images/post-bg.jpg')">
-        
-      </div>
-    </header>    
-
-  <section id="wrapper">
-    <a class="hidden-close"></a>
-
-    <!-- Post content -->
-    <main class="content" role="main">
-        <article class="post">
-        <div class="inner">
-            <section class="post-content">
-                <style type="text/css">/*!
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>QUANTGO's BLOG</title><link href="http://kennethchentt.github.io/" rel="alternate"></link><link href="http://kennethchentt.github.io/feeds/finance.atom.xml" rel="self"></link><id>http://kennethchentt.github.io/</id><updated>2016-06-08T20:00:00+08:00</updated><entry><title>Fench-Fama's Factor Model</title><link href="http://kennethchentt.github.io/first-post.html" rel="alternate"></link><published>2016-06-08T20:00:00+08:00</published><updated>2016-06-08T20:00:00+08:00</updated><author><name>Kenneth Chen</name></author><id>tag:kennethchentt.github.io,2016-06-08:first-post.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -341,7 +226,7 @@ div.unrecognized_cell .inner_cell a:hover {
   text-decoration: none;
 }
 @media (max-width: 540px) {
-  div.unrecognized_cell > div.prompt {
+  div.unrecognized_cell &gt; div.prompt {
     display: none;
   }
 }
@@ -394,19 +279,19 @@ div.input_prompt {
   color: #303F9F;
   border-top: 1px solid transparent;
 }
-div.input_area > div.highlight {
+div.input_area &gt; div.highlight {
   margin: 0.4em;
   border: none;
   padding: 0px;
   background-color: transparent;
 }
-div.input_area > div.highlight > pre {
+div.input_area &gt; div.highlight &gt; pre {
   margin: 0px;
   border: none;
   padding: 0px;
   background-color: transparent;
 }
-/* The following gets added to the <head> if it is detected that the user has a
+/* The following gets added to the &lt;head&gt; if it is detected that the user has a
  * monospace font with inconsistent normal/bold/italic height.  See
  * notebookmain.js.  Such fonts will have keywords vertically offset with
  * respect to the rest of the text.  The user should select a better font.
@@ -452,7 +337,7 @@ div.input_area > div.highlight > pre {
 }
 /*
 
-Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Original style from softwaremaniacs.org (c) Ivan Sagalaev &lt;Maniac@SoftwareManiacs.Org&gt;
 Adapted from GitHub theme
 
 */
@@ -914,7 +799,7 @@ div.text_cell {
   align-items: stretch;
 }
 @media (max-width: 540px) {
-  div.text_cell > div.prompt {
+  div.text_cell &gt; div.prompt {
     display: none;
   }
 }
@@ -979,8 +864,8 @@ h6:hover .anchor-link {
   font-size: 100%;
   font-style: italic;
 }
-</style>
-<style type="text/css">.highlight .hll { background-color: #ffffcc }
+&lt;/style&gt;
+&lt;style type="text/css"&gt;.highlight .hll { background-color: #ffffcc }
 .highlight  { background: #f8f8f8; }
 .highlight .c { color: #408080; font-style: italic } /* Comment */
 .highlight .err { border: 1px solid #FF0000 } /* Error */
@@ -1048,8 +933,8 @@ h6:hover .anchor-link {
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
-.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
-<style type="text/css">
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */&lt;/style&gt;
+&lt;style type="text/css"&gt;
 /* Temporary definitions which will become obsolete with Notebook release 5.0 */
 .ansi-black-fg { color: #3E424D; }
 .ansi-black-bg { background-color: #3E424D; }
@@ -1085,83 +970,83 @@ h6:hover .anchor-link {
 .ansi-white-intense-bg { background-color: #A1A6B2; }
 
 .ansi-bold { font-weight: bold; }
-</style>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Factor-Models">Factor Models<a class="anchor-link" href="#Factor-Models">¶</a></h2><p><em>Alpha</em>, the market excess return, is a measure of the active return on an investment, the performance of that investment compared with a suitable market index. An alpha of 1% means the investment's return on investment over a selected period of time was 1% better than the market during that same period. In CAPM model, it's the intercept of sercurity characteristic line (SCL): $$SCL: R_{i,t} - R_f = \alpha_i + \beta_i(R_{M,t} - R_f) + \epsilon_{i,t}$$</p>
-<p>Traders and investors justifiably like to chase after <em>"alphas"</em> —— return that are not known to be associated with factor risks. Earning alpha is almost riskless arbitrage, because their risks can be reduced to zero by increasing diversification. The more stocks one includes in a portfolio with positive alpha, the smaller (white noise) the risk compared to its return.</p>
-<p>On the other hand, factor risk cannot be diversified away. No matter how many value stocks you add to the long side of a portfolio, and how many growth stocks you add to the short side (<em>long-short market-neural portfolio - value stocks offer better long-term returns than growth stocks</em>), the factor risk remains unchanged. In fact, their risks are unlike the random flunctuation of white noise, the factor risk of each stock is both <strong><em>serially</em></strong> and <strong><em>cross-sectionally</em></strong> correlated over a period of time.</p>
-<hr />
-<h4 id="Time-series-Factor"><em>Time-series Factor</em><a class="anchor-link" href="#Time-series-Factor">¶</a></h4><p>So-called time-series factor is vary from time to time, but they do not vary across different stocks or financial assets. e.g., the market return and the value-minus-growth (HML, returns of basket of high <em>book-to-market</em> stocks minus that of a basket of low <em>book-to-market</em> stocks) are examples of time-series factors. Such a long-short portfolio whose returns represent a time-series factor is called a "hedge" portfolio. What do vary across different stocks are their returns in respone to this factor. This response is called <strong><em>factor loading</em></strong>, which just a regression coefficient, and it's dimensionless (meaning won't change overtime). Mathmatically, it can be written as below:</p>
-<p>$$ Return(t, s) - r_{risk  free} = \alpha(t, s) + \beta_1(s)*FactorRet_1(t) + \beta_2(s)*FactorRet_2(t) + ... + \epsilon(t, s)$$, where $s$ is the stock.</p>
-<p>(<em>To my understanding, one can understand this factor model with the following 'sound-like' logics, investing in values stocks is better than growth stocks, afterall, Warrant Buffet is rich; also small cap stock has more space to grow compared to large cap, and nowadays, investors believe that small cap stocks are no more risky than large cap stocks as long as they are sufficiently diversified. Thus, it makes sense these invisible factors generate returns as long as there's risk comes along</em>)</p>
-<p>The equation above we still put $\alpha$ in it, it is because there might be still some arbitrage time-varying returns that is not be driven by common factors. In arbitrage free market, we can consider it to be zero, or a constant otherwise. Also the equation as can be seens is a descriptive model, meaning it explains how returns correlated with those factors. which allow us uses this as risk management, e.g., if we found the a strategy or portfolio regress(loads) positive to volatility factor change, then we can construct a hedge portfolio that loads negative to volatility change, such that we have minimum exposure to volatility.</p>
-<p>While for predictive model, we can turn the aboved equation into this:
-$$ Return(t+1, s) - r_{risk  free} = \alpha(t, s) + \beta_1(s)*FactorRet_1(t) + \beta_2(s)*FactorRet_2(t) + ... + \epsilon(t, s)$$</p>
-<p>we can use <em>t+1</em> return to perform a regression to get the correlated <em>factor loading</em> in order for future prediction.</p>
-<h4 id="Using-Fama-French-factors-to-predict-next-day-return"><em>Using Fama-French factors to predict next day return</em><a class="anchor-link" href="#Using-Fama-French-factors-to-predict-next-day-return">¶</a></h4><p>On top opf CAPM model, Fama-French proposed three factor model to explain stock return:</p>
-<pre><code>* market risk (CAPM)
+&lt;/style&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="Factor-Models"&gt;Factor Models&lt;a class="anchor-link" href="#Factor-Models"&gt;¶&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;&lt;em&gt;Alpha&lt;/em&gt;, the market excess return, is a measure of the active return on an investment, the performance of that investment compared with a suitable market index. An alpha of 1% means the investment's return on investment over a selected period of time was 1% better than the market during that same period. In CAPM model, it's the intercept of sercurity characteristic line (SCL): $$SCL: R_{i,t} - R_f = \alpha_i + \beta_i(R_{M,t} - R_f) + \epsilon_{i,t}$$&lt;/p&gt;
+&lt;p&gt;Traders and investors justifiably like to chase after &lt;em&gt;"alphas"&lt;/em&gt; —— return that are not known to be associated with factor risks. Earning alpha is almost riskless arbitrage, because their risks can be reduced to zero by increasing diversification. The more stocks one includes in a portfolio with positive alpha, the smaller (white noise) the risk compared to its return.&lt;/p&gt;
+&lt;p&gt;On the other hand, factor risk cannot be diversified away. No matter how many value stocks you add to the long side of a portfolio, and how many growth stocks you add to the short side (&lt;em&gt;long-short market-neural portfolio - value stocks offer better long-term returns than growth stocks&lt;/em&gt;), the factor risk remains unchanged. In fact, their risks are unlike the random flunctuation of white noise, the factor risk of each stock is both &lt;strong&gt;&lt;em&gt;serially&lt;/em&gt;&lt;/strong&gt; and &lt;strong&gt;&lt;em&gt;cross-sectionally&lt;/em&gt;&lt;/strong&gt; correlated over a period of time.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h4 id="Time-series-Factor"&gt;&lt;em&gt;Time-series Factor&lt;/em&gt;&lt;a class="anchor-link" href="#Time-series-Factor"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;So-called time-series factor is vary from time to time, but they do not vary across different stocks or financial assets. e.g., the market return and the value-minus-growth (HML, returns of basket of high &lt;em&gt;book-to-market&lt;/em&gt; stocks minus that of a basket of low &lt;em&gt;book-to-market&lt;/em&gt; stocks) are examples of time-series factors. Such a long-short portfolio whose returns represent a time-series factor is called a "hedge" portfolio. What do vary across different stocks are their returns in respone to this factor. This response is called &lt;strong&gt;&lt;em&gt;factor loading&lt;/em&gt;&lt;/strong&gt;, which just a regression coefficient, and it's dimensionless (meaning won't change overtime). Mathmatically, it can be written as below:&lt;/p&gt;
+&lt;p&gt;$$ Return(t, s) - r_{risk  free} = \alpha(t, s) + \beta_1(s)*FactorRet_1(t) + \beta_2(s)*FactorRet_2(t) + ... + \epsilon(t, s)$$, where $s$ is the stock.&lt;/p&gt;
+&lt;p&gt;(&lt;em&gt;To my understanding, one can understand this factor model with the following 'sound-like' logics, investing in values stocks is better than growth stocks, afterall, Warrant Buffet is rich; also small cap stock has more space to grow compared to large cap, and nowadays, investors believe that small cap stocks are no more risky than large cap stocks as long as they are sufficiently diversified. Thus, it makes sense these invisible factors generate returns as long as there's risk comes along&lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;The equation above we still put $\alpha$ in it, it is because there might be still some arbitrage time-varying returns that is not be driven by common factors. In arbitrage free market, we can consider it to be zero, or a constant otherwise. Also the equation as can be seens is a descriptive model, meaning it explains how returns correlated with those factors. which allow us uses this as risk management, e.g., if we found the a strategy or portfolio regress(loads) positive to volatility factor change, then we can construct a hedge portfolio that loads negative to volatility change, such that we have minimum exposure to volatility.&lt;/p&gt;
+&lt;p&gt;While for predictive model, we can turn the aboved equation into this:
+$$ Return(t+1, s) - r_{risk  free} = \alpha(t, s) + \beta_1(s)*FactorRet_1(t) + \beta_2(s)*FactorRet_2(t) + ... + \epsilon(t, s)$$&lt;/p&gt;
+&lt;p&gt;we can use &lt;em&gt;t+1&lt;/em&gt; return to perform a regression to get the correlated &lt;em&gt;factor loading&lt;/em&gt; in order for future prediction.&lt;/p&gt;
+&lt;h4 id="Using-Fama-French-factors-to-predict-next-day-return"&gt;&lt;em&gt;Using Fama-French factors to predict next day return&lt;/em&gt;&lt;a class="anchor-link" href="#Using-Fama-French-factors-to-predict-next-day-return"&gt;¶&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;On top opf CAPM model, Fama-French proposed three factor model to explain stock return:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;* market risk (CAPM)
 * the outperformance of small vs big companiese
 * the outperformance of high book-to-market vs low book-to-market
 
-</code></pre>
-<p>which can be written in formula:
-$$ r = r_f + \beta_1(r_m-r_f) + \beta_2SMB + \beta_3HML + \alpha + \epsilon$$</p>
-<p>To construct factor model:</p>
-<p><em>Step 1. Sort the index member by their cap</em></p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [1]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [9]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example to get PB ratio from bloomberg and store it into database</span>
-<span class="kn">from</span> <span class="nn">blpapiwrapper</span> <span class="k">import</span> <span class="n">BLP</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">sqlite3</span>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;which can be written in formula:
+$$ r = r_f + \beta_1(r_m-r_f) + \beta_2SMB + \beta_3HML + \alpha + \epsilon$$&lt;/p&gt;
+&lt;p&gt;To construct factor model:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Step 1. Sort the index member by their cap&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [1]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="k"&gt;matplotlib&lt;/span&gt; inline
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [9]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# example to get PB ratio from bloomberg and store it into database&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;blpapiwrapper&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BLP&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;datetime&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sqlite3&lt;/span&gt;
 
-<span class="n">bbg</span> <span class="o">=</span> <span class="n">BLP</span><span class="p">()</span>
-<span class="n">fields</span> <span class="o">=</span> <span class="s1">'PX_TO_BOOK_RATIO'</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2005</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">27</span><span class="p">)</span>
+&lt;span class="n"&gt;bbg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BLP&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;fields&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'PX_TO_BOOK_RATIO'&lt;/span&gt;
+&lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;datetime&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datetime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2005&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;datetime&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datetime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2017&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;27&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-<span class="n">stocklist</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'data/SHSZ300MEMB.csv'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">)</span>
+&lt;span class="n"&gt;stocklist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'data/SHSZ300MEMB.csv'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'r'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 
-<span class="k">for</span> <span class="n">stock</span> <span class="ow">in</span> <span class="n">stocklist</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
-    <span class="n">flds_df</span> <span class="o">=</span> <span class="n">bbg</span><span class="o">.</span><span class="n">bdh</span><span class="p">(</span><span class="n">stock</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> 
-    <span class="n">flds_df</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'PB_Ratio'</span><span class="p">]</span>
-    <span class="n">flds_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'Date'</span>
-    <span class="n">flds_df</span><span class="p">[</span><span class="s1">'Ticker'</span><span class="p">]</span> <span class="o">=</span> <span class="n">stock</span>
-    <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'data/CHINASTOCK.db'</span><span class="p">)</span> <span class="k">as</span> <span class="n">cnx</span><span class="p">:</span>
-        <span class="n">flds_df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s1">'PriceToBook'</span><span class="p">,</span> <span class="n">cnx</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">'append'</span><span class="p">)</span>
-    <span class="n">cnx</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="nb">print</span> <span class="n">stock</span><span class="o">+</span><span class="s1">' done'</span>
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;stock&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;stocklist&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;splitlines&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;flds_df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bbg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bdh&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stock&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fields&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+    &lt;span class="n"&gt;flds_df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'PB_Ratio'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;flds_df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'Date'&lt;/span&gt;
+    &lt;span class="n"&gt;flds_df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Ticker'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;stock&lt;/span&gt;
+    &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;sqlite3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'data/CHINASTOCK.db'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;cnx&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;flds_df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_sql&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'PriceToBook'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cnx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;if_exists&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'append'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;cnx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="n"&gt;stock&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s1"&gt;' done'&lt;/span&gt;
        
-<span class="n">bbg</span><span class="o">.</span><span class="n">closeSession</span><span class="p">()</span>
-<span class="nb">print</span> <span class="s1">'**********All Done*******'</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
+&lt;span class="n"&gt;bbg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;closeSession&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;'**********All Done*******'&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var mathjaxscript = document.createElement('script');
     mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
     mathjaxscript.type = 'text/javascript';
@@ -1188,55 +1073,5 @@ $$ r = r_f + \beta_1(r_m-r_f) + \beta_2SMB + \beta_3HML + \alpha + \epsilon$$</p
         "}); ";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-</script>
-
-            </section>
-
-            <section class="post-info">
-                <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=Fench-Fama's Factor Model&amp;url=http://kennethchentt.github.io/first-post.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
-                    </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://kennethchentt.github.io/first-post.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
-                    </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=http://kennethchentt.github.io/first-post.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
-                    </a>
-                    <div class="clear"></div>
-                </div>
-
-                <aside class="post-tags">
-<a href="http://kennethchentt.github.io/tag/python.html">python</a>                </aside>
-
-                <div class="clear"></div>
-
- 
-
-                </section>
-
-
-                <aside class="post-nav">
-                    <div class="clear"></div>
-                </aside>
-
-            </div>
-        </article>
-    </main>
-      <!-- TODO : Body class -->
-    <div id="body-class" style="display: none;" class=""></div>
-  
-    <footer id="footer">
-      <div class="inner">
-        <section class="credits">
-          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
-          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
-        </section>
-      </div>
-    </footer>
-  </section>
-
-  <script type="text/javascript" src="http://kennethchentt.github.io/theme/js/script.js"></script>
-  
-</body>
-</html>
+&lt;/script&gt;
+</summary><category term="python"></category></entry></feed>
