@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>QUANTGO's BLOG</title><link href="http://kennethchentt.github.io/" rel="alternate"></link><link href="http://kennethchentt.github.io/feeds/machine-learning.atom.xml" rel="self"></link><id>http://kennethchentt.github.io/</id><updated>2017-12-08T20:00:00+08:00</updated><entry><title>Deep Learning</title><link href="http://kennethchentt.github.io/third-post.html" rel="alternate"></link><published>2017-12-08T20:00:00+08:00</published><updated>2017-12-08T20:00:00+08:00</updated><author><name>Kenneth Chen</name></author><id>tag:kennethchentt.github.io,2017-12-08:third-post.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>QUANTGO's BLOG</title><link href="https://kennethchentt.github.io/" rel="alternate"></link><link href="https://kennethchentt.github.io/feeds/machine-learning.atom.xml" rel="self"></link><id>https://kennethchentt.github.io/</id><updated>2017-12-08T20:00:00+08:00</updated><entry><title>Deep Learning</title><link href="https://kennethchentt.github.io/third-post.html" rel="alternate"></link><published>2017-12-08T20:00:00+08:00</published><updated>2017-12-08T20:00:00+08:00</updated><author><name>Kenneth Chen</name></author><id>tag:kennethchentt.github.io,2017-12-08:third-post.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -7535,7 +7535,7 @@ RK5CYII=
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</summary><category term="python"></category></entry><entry><title>Machine Learning - Logistic Classification</title><link href="http://kennethchentt.github.io/second-post.html" rel="alternate"></link><published>2017-12-01T20:00:00+08:00</published><updated>2017-12-01T20:00:00+08:00</updated><author><name>Kenneth</name></author><id>tag:kennethchentt.github.io,2017-12-01:second-post.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+</summary><category term="python"></category></entry><entry><title>Machine Learning - Logistic Classification</title><link href="https://kennethchentt.github.io/second-post.html" rel="alternate"></link><published>2017-12-01T20:00:00+08:00</published><updated>2017-12-01T20:00:00+08:00</updated><author><name>Kenneth</name></author><id>tag:kennethchentt.github.io,2017-12-01:second-post.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
