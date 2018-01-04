@@ -1,5 +1,1802 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>QUANTGO's BLOG</title><link href="https://kennethchentt.github.io/" rel="alternate"></link><link href="https://kennethchentt.github.io/feeds/all.atom.xml" rel="self"></link><id>https://kennethchentt.github.io/</id><updated>2017-12-08T20:00:00+08:00</updated><entry><title>Neural Networks</title><link href="https://kennethchentt.github.io/fourth-post.html" rel="alternate"></link><published>2017-12-08T20:00:00+08:00</published><updated>2017-12-08T20:00:00+08:00</updated><author><name>Kenneth Chen</name></author><id>tag:kennethchentt.github.io,2017-12-08:fourth-post.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>QUANTGO's BLOG</title><link href="https://kennethchentt.github.io/" rel="alternate"></link><link href="https://kennethchentt.github.io/feeds/all.atom.xml" rel="self"></link><id>https://kennethchentt.github.io/</id><updated>2018-01-01T20:00:00+08:00</updated><entry><title>Feature Extraction and Preprocessing</title><link href="https://kennethchentt.github.io/fifth-post.html" rel="alternate"></link><published>2018-01-01T20:00:00+08:00</published><updated>2018-01-01T20:00:00+08:00</updated><author><name>Kenneth Chen</name></author><id>tag:kennethchentt.github.io,2018-01-01:fifth-post.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI colors. */
+.ansibold {
+  font-weight: bold;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected {
+  border-color: #ababab;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  div.cell.selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell &gt; div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area &gt; div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area &gt; div.highlight &gt; pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the &lt;head&gt; if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  padding: 0.4em;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev &lt;Maniac@SoftwareManiacs.Org&gt;
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+.rendered_html pre,
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+.rendered_html td,
+
+
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell &gt; div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+&lt;/style&gt;
+&lt;style type="text/css"&gt;.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */&lt;/style&gt;
+&lt;style type="text/css"&gt;
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+&lt;/style&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h3 id="Extracting-features-from-categorial-variables"&gt;Extracting features from categorial variables&lt;a class="anchor-link" href="#Extracting-features-from-categorial-variables"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Many machine learning problems have &lt;em&gt;categorial&lt;/em&gt; or &lt;em&gt;nomial&lt;/em&gt;, rather than continuous features. Cetegorial variables are commonly encoded using &lt;strong&gt;one-of-k&lt;/strong&gt; or &lt;strong&gt;one-hot&lt;/strong&gt; encoding.&lt;/p&gt;
+&lt;p&gt;exampls:&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [46]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="k"&gt;pylab&lt;/span&gt; inline
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Populating the interactive namespace from numpy and matplotlib
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stderr output_text"&gt;
+&lt;pre&gt;WARNING: pylab import has clobbered these variables: ['dist']
+`%matplotlib` prevents importing * from pylab and numpy
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [1]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.feature_extraction&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DictVectorizer&lt;/span&gt;
+&lt;span class="n"&gt;onehot_encoder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DictVectorizer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;instances&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;&lt;span class="s1"&gt;'city'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s1"&gt;'New York'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'city'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s1"&gt;'San Francisco'&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'city'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s1"&gt;'Chapel HIll'&lt;/span&gt;&lt;span class="p"&gt;}]&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;onehot_encoder&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;instances&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;toarray&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;[[ 0.  1.  0.]
+ [ 0.  0.  1.]
+ [ 1.  0.  0.]]
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h3 id="Extracting-features-from-text:-the-bag-of-words-representation"&gt;Extracting features from text: the bag-of-words representation&lt;a class="anchor-link" href="#Extracting-features-from-text:-the-bag-of-words-representation"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;This representation uses a multiset, or bag, that encodes the words that appear in the text; the bag-of-words does not encode any of the text's syntax, ignores the orders of words, and disregards all grammar. Bag-of-words can be thought of as an extension to &lt;strong&gt;one-hot encoding&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The bag-of-words model can be used effectively for &lt;strong&gt;document classifcation&lt;/strong&gt; and retriveval despite the limited information that it encodes.&lt;/p&gt;
+&lt;p&gt;A collection of document is called a &lt;strong&gt;corpus&lt;/strong&gt;.
+example:&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [5]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'UNC played Duke in basketball'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Duke lost the basketball game'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;This corpus contains eigth unique words: UNC, played, Duke, in, basketball, lost, the and game. The corpus's unique words comprise its &lt;em&gt;vocabulary&lt;/em&gt;. The number of elements that comprise a feature vecotr is called the vector's &lt;strong&gt;dimension&lt;/strong&gt;. A &lt;strong&gt;dictionary&lt;/strong&gt; maps the vocabulary to indices in the feature vector.&lt;/p&gt;
+&lt;p&gt;each element in the feature vector is a binary value that represents whether or not the corresponding word appeared in the document. The first word in the dictionary is UNC, so the first element in the vector is equal to one. The last word in the dictionary is game. The first document does not contain the word game, so the eighth element in its vector is set to 0.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [62]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.feature_extraction.text&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+
+&lt;span class="n"&gt;corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'UNC played Duke in basketball'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Duke win the basketball game'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'I ate a sandwitch'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+           &lt;span class="s1"&gt;'Duke football sucks'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Duke is top 1 in USA'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Duke is number 2 in USA'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;outputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;todense&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;outputs&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s1"&gt; = &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s1"&gt;'&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;outputs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+&lt;span class="c1"&gt;#print(vectorizer.vocabulary_)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;UNC played Duke in basketball = [[0 1 1 0 0 1 0 0 1 0 0 0 0 1 0 0]]
+Duke win the basketball game = [[0 1 1 0 1 0 0 0 0 0 0 1 0 0 0 1]]
+I ate a sandwitch = [[1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0]]
+Duke football sucks = [[0 0 1 1 0 0 0 0 0 0 1 0 0 0 0 0]]
+Duke is top 1 in USA = [[0 0 1 0 0 1 1 0 0 0 0 0 1 0 1 0]]
+Duke is number 2 in USA = [[0 0 1 0 0 1 1 1 0 0 0 0 0 0 1 0]]
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;scikit-learn's &lt;strong&gt;euclidean_distance&lt;/strong&gt; function can be used to calculate the distance between two or more vectors, and it confirms that &lt;em&gt;the most semantically similar documents are also the closest to each other in space&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [63]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.metrics.pairwise&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;euclidean_distances&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+
+&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;outputs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;dist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;euclidean_distances&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;outputs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;outputs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;#for i, output in enumerate(outputs):&lt;/span&gt;
+&lt;span class="c1"&gt;#    j=i+1&lt;/span&gt;
+&lt;span class="c1"&gt;#    while(j&lt;len(outputs)):&amp;lt; span&gt;
+&lt;span class="c1"&gt;#        print('Distance between %s and %s:'%(i,j),euclidean_distances(outputs[i], outputs[j]))&lt;/span&gt;
+&lt;span class="c1"&gt;#        j=j+1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;[[ 0.          2.44948974  2.64575131  2.44948974  2.44948974  2.44948974]
+ [ 2.44948974  0.          2.64575131  2.44948974  2.82842712  2.82842712]
+ [ 2.64575131  2.64575131  0.          2.23606798  2.64575131  2.64575131]
+ [ 2.44948974  2.44948974  2.23606798  0.          2.44948974  2.44948974]
+ [ 2.44948974  2.82842712  2.64575131  2.44948974  0.          1.41421356]
+ [ 2.44948974  2.82842712  2.64575131  2.44948974  1.41421356  0.        ]]
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [64]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.manifold&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MDS&lt;/span&gt;
+
+&lt;span class="n"&gt;mds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MDS&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n_components&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dissimilarity&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"precomputed"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;random_state&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;pos&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ys&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pos&lt;/span&gt;&lt;span class="p"&gt;[:,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;pos&lt;/span&gt;&lt;span class="p"&gt;[:,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ys&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;scatter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_png output_subarea "&gt;
+&lt;img src="data:image/png;base64,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
+pqYLDAwssu7yyy/XAwcO6BtvvKGjR492r+/Tp4+mpKS499u/f7+2a9dOV61apaqqK1eu1OHDh6uq
+al5envbp00c///zzIvXHxcVpamqqqqpOnjxZhw0bpqqq6enp2qxZMz1z5kyx68+PacKECRoREaFn
+zpzRQ4cO6bXXXqv79u3Tc+fO6S+//KKqqocOHdKWLVsWOebdu3drWFhYkfgmT56sf//7393HceLE
+iSJ9tXjxYh06dKiqqt511106bdo0d/njx4+7687IyNDIyEj9+uuvVVV19OjR+vbbb6uqak5Ojp4+
+fbpI+6b6cn1uVvnnd2W+ynWflzGVSb0453X27Fm6d+/OjBkz6Ny5MwArV64kKSkJh8OBqpKdnU1m
+ZiadOnUqto21a9fyf//3fwAEBwcTFBRERkaGx/Xfffedx1j69u1LnTp1uPLKK7n55pvZuHEjt956
+K48//jiff/45fn5+7N27lwMHDtCoUaNSj61t27YMGzaMnJwc+vbtS5s2bUosv3r1at58803AOVUY
+GBjIkSNHOHDgAP369eODDz6gVSvn8wI6dOjAM888w48//sgdd9xBy5YtS43HmKpkzzY01UZiYiLx
+8QOIjx9Abm5uoW07d+7E39+fhg0b4u/vT15ennvb6dOn3cv+/v5ERUWxYsUK9zpVZdy4caSmprJ1
+61a+++4799Sat1TV47mikhJqwfL5+y9YsIDDhw+zdetWtm7dSqNGjQrFX5LOnTuzZs0arr76au6/
+/37eeuutImUK1lXcua3LLruMZs2a8fnnn7vXDR48mI8++ohLLrmEW2+9tcZfhm2qP0teplpITEzk
+jjuGkJR0O0lJt3Py5CkSExMBOHjwICNHjnSf5woKCmLbtm2oKnv27GHjxo3uekSEuXPnkp6ezvPP
+Pw9Az549mTt3LtnZ2QDs3buXgwcPlhhP586dWbBgAQDfffcde/bsITg4uNj1gYGBHD9+vFAd//rX
+vzh79iyHDx8mJSWFtm3bcuzYMRo1aoSfnx+fffYZWVlZ7vIFE6GnpPjDDz/QqFEjhg0bxu9//3tS
+U513pjRp0oSMjAzy8vJYsmSJu/wtt9zCzJkzAcjLy3PHFxAQwJIlS5g/fz4LFy4EYNeuXTRv3pzR
+o0fTt29ftm/fXmL/GFPVbNrQVAuTJ8/m1KnngCGuNcMYOPAumjW7htq1a3PffffxyCOPABAbG0tQ
+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
++f9NV7eR1yxl1wAAAABJRU5ErkJggg==
+" /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;&lt;strong&gt;Sparse vectors&lt;/strong&gt;: Articles will have many elements, and many of the elements will be zero. Most sports articles will not have any of the words particulary to finance ariticles. High dimentional features vectors that have many zero-valued elements are call &lt;em&gt;sparse vectors&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Sparse vectors requires many memory which creates several problems for machine learning tasks. Numpy provides some data types that mitigate this problem by efficiently representing only the nonzero elements of sparse vectors.&lt;/p&gt;
+&lt;p&gt;Another problem with this is call &lt;strong&gt;curse of dimensionality&lt;/strong&gt;. As feature space's dimensionality increases, more training data is required to ensure that there's enough training instances with each combination of the features' values. If there are insufficient training instances for a feature, &lt;em&gt;the algorithm may overfit noise in the traiing data and fail to generalize&lt;/em&gt;. Hence, we need some &lt;em&gt;techiniques to reduce the dimensionality of text features&lt;/em&gt;.&lt;/p&gt;
+&lt;h3 id="Dimensionality-Reduction"&gt;Dimensionality Reduction&lt;a class="anchor-link" href="#Dimensionality-Reduction"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;To reduce the dimensions of feature space, we can convert all of the text to lowercase.&lt;/li&gt;
+&lt;li&gt;Remove words that are common to most of the documents in the corpus. These words called &lt;em&gt;stop words&lt;/em&gt;, e.g., the, a and an...&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Stop-word filtering&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Lemmatization&lt;/em&gt;&lt;/strong&gt; is the process of determining the lemma, or the morphological root.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Stemming&lt;/em&gt;&lt;/strong&gt; has a similar gola to lemmatization, but it does not attempt to produce the morphological root of words. Instead, stemming removes all paterrns of characters that appear to be affixes, resulting in a token that is not necessarily a valid word.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [6]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.feature_extraction.text&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;
+&lt;span class="n"&gt;corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'He ate the sandwiches'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'Every sandwich was eaten by him'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;binary&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stop_words&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'english'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;todense&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vocabulary_&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;[[1 0 0 1]
+ [0 1 1 0]]
+{'sandwiches': 3, 'eaten': 1, 'ate': 0, 'sandwich': 2}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [7]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'I am gathering ingredients for the sandwich'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'There were many wizards at the gathering'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;binary&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stop_words&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'english'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;todense&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vocabulary_&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;[[1 1 1 0]
+ [1 0 0 1]]
+{'gathering': 0, 'wizards': 3, 'sandwich': 2, 'ingredients': 1}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;gathering -verb, noun problem - we use NLTK pack to lemmatizatize them&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [8]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;nltk.stem.wordnet&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;WordNetLemmatizer&lt;/span&gt;
+
+&lt;span class="n"&gt;lemmatizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;WordNetLemmatizer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lemmatizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lemmatize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'gathering'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'v'&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lemmatizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lemmatize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'gathering'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'n'&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;gather
+gathering
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Let's compare the lemmatization with stemming&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [10]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;nltk&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;word_tokenize&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;nltk.stem&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;PorterStemmer&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;nltk.stem.wordnet&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;WordNetLemmatizer&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;nltk&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;pos_tag&lt;/span&gt;
+
+&lt;span class="n"&gt;wordnet_tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'n'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'v'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'He ate the  sandwiches'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Every sandwich was eaten by him'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;stemmer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PorterStemmer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Stemmed:'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="n"&gt;stemmer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stem&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;token&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;word_tokenize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;lemmatize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tag&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;tag&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'n'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'v'&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;lemmatizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lemmatize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tag&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;token&lt;/span&gt;
+
+&lt;span class="n"&gt;lemmatizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;WordNetLemmatizer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;tagged_corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;pos_tag&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;word_tokenize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Lemmatized:'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="n"&gt;lemmatize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tag&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tag&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;document&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;tagged_corpus&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Stemmed: [['He', 'ate', 'the', 'sandwich'], ['Everi', 'sandwich', 'wa', 'eaten', 'by', 'him']]
+Lemmatized: [['He', 'eat', 'the', 'sandwich'], ['Every', 'sandwich', 'be', 'eat', 'by', 'him']]
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;&lt;strong&gt;Extending bag-of-words with TF-IDF weights&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Instead of binary tokenize the document, it's intuitivethat the frequncy with which a word appears in a document could indicate the extent to which a document pertains to that word. Hence, we will now use an integer that represents the number of times that the words appeared in the document.&lt;/p&gt;
+&lt;p&gt;example:&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [5]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.feature_extraction.text&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;
+&lt;span class="n"&gt;corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'The dog ate a sandwich, the wizard trnasfigured a sandwich, and I ate a sandwich'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stop_words&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'english'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;todense&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vocabulary_&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;[[2 1 3 1 1]]
+{'ate': 0, 'sandwich': 2, 'trnasfigured': 3, 'dog': 1, 'wizard': 4}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;However, another problem comes up, many words might appear with the same frequency in two documents, but the documents could still be dissimilar if one document is many times larger than the other.&lt;/p&gt;
+&lt;p&gt;scikit-learn's &lt;strong&gt;TfdfTransformer&lt;/strong&gt; object can mitigate this problem by transforming a matrix of term frequency vectors into a matrix of normalized term frequncy weights. By default, &lt;strong&gt;TfdfTransformer&lt;/strong&gt; smoothes the raw counts and applies L2 normalization.&lt;/p&gt;
+&lt;p&gt;In addition to normalizing raw term counts, we can improve our feature vectors by calculating &lt;strong&gt;logarithmically scaled term frequencies&lt;/strong&gt;, which scale the counts to a more limited range or &lt;strong&gt;augmented term frequencies&lt;/strong&gt;, which further mitigates the bias for longer documents.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;TfdfTransformer&lt;/strong&gt; object calculates logarithmically scaled term frequencies when its &lt;em&gt;sublineartf&lt;/em&gt; keyword argument is set to True.&lt;/p&gt;
+&lt;p&gt;However, another problem remains that occur frequently in a document, even if those terms occur frequently in most documents in the corpus. These terms do not help to represent the meaning of a particular document relative to the rest of the corpus. e.g. most of the docuements in a corpus of articles about Duke's basketball team could include the words &lt;em&gt;basketball, Coach K and flop&lt;/em&gt;. These words can be thought of as corpus-specific stop words and may not be useful to calcuate the similarity of documents.&lt;/p&gt;
+&lt;p&gt;Then the &lt;strong&gt;inverse document frequency (IDF)&lt;/strong&gt; is measure of how rare or common a word is in a corpus.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [7]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.feature_extraction.text&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TfidfVectorizer&lt;/span&gt;
+&lt;span class="n"&gt;corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="s1"&gt;'The dog ate a sandwich and I ate a sandwich'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;'The wizard transfigured a sandwich'&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;TfidfVectorizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stop_words&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'english'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;todense&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vocabulary_&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;[[ 0.75458397  0.37729199  0.53689271  0.          0.        ]
+ [ 0.          0.          0.44943642  0.6316672   0.6316672 ]]
+{'sandwich': 2, 'ate': 0, 'dog': 1, 'transfigured': 3, 'wizard': 4}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Comparison the corpus just in one sentense&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [8]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="s1"&gt;'The dog ate a sandwich and I ate a sandwich, The wizard transfigured a sandwich'&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;TfidfVectorizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stop_words&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'english'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;todense&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vocabulary_&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;[[ 0.5   0.25  0.75  0.25  0.25]]
+{'sandwich': 2, 'ate': 0, 'dog': 1, 'transfigured': 3, 'wizard': 4}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h3 id="Space-efficient-feature-vectorizing-with-the-hashing-trick"&gt;Space-efficient feature vectorizing with the hashing trick&lt;a class="anchor-link" href="#Space-efficient-feature-vectorizing-with-the-hashing-trick"&gt;¶&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Why we need this it's because a dictionary containing all of the corpus's unique tokens is used to map a document's tokens to the elements of a feature vector. Creating this dictionary has two drawbacks. First, two passes are required over the corpus: the first pass isued to create the dictionary and the second pass is used to create feature vectors for the documents.&lt;/p&gt;
+&lt;p&gt;Second, the dictionary must be stored in memory which could be prohibitive for large corpora.&lt;/p&gt;
+&lt;p&gt;Lucky it's possible to avoid creating this dictionary thru applying a hash function to the token to determine its index in the feature vector directly. the shortcut is called the &lt;strong&gt;hasing trick&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;example:&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In [14]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+&lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.feature_extraction.text&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;HashingVectorizer&lt;/span&gt;
+&lt;span class="c1"&gt;#corpus = ['the', 'ate','bacon', 'cat']&lt;/span&gt;
+&lt;span class="n"&gt;corpus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="s1"&gt;'The dog ate a sandwich and I ate a sandwich'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;'The wizard transfigured a sandwich'&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;HashingVectorizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n_features&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;todense&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+
+&lt;span class="n"&gt;vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stop_words&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'english'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;corpus&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;todense&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vocabulary_&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;[[ 0.33333333  0.66666667  0.         -0.66666667  0.        ]
+ [ 0.9486833   0.          0.         -0.31622777  0.        ]]
+[[2 1 2 0 0]
+ [0 0 1 1 1]]
+{'sandwich': 2, 'ate': 0, 'dog': 1, 'transfigured': 3, 'wizard': 4}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;
+</summary><category term="python"></category></entry><entry><title>Neural Networks</title><link href="https://kennethchentt.github.io/fourth-post.html" rel="alternate"></link><published>2017-12-08T20:00:00+08:00</published><updated>2017-12-08T20:00:00+08:00</updated><author><name>Kenneth Chen</name></author><id>tag:kennethchentt.github.io,2017-12-08:fourth-post.html</id><summary type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
