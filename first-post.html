@@ -1079,18 +1079,22 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Factor-Models">Factor Models<a class="anchor-link" href="#Factor-Models">¶</a></h2><p><em>Alpha</em>, the market excess return, is a measure of the active return on an investment, the performance of that investment compared with a suitable market index. An alpha of 1% means the investment's return on investment over a selected period of time was 1% better than the market during that same period. In CAPM model, it's the intercept of sercurity characteristic line (SCL): $$SCL: R_{i,t} - R_f = \alpha_i + \beta_i(R_{M,t} - R_f) + \epsilon_{i,t}$$</p>
+<h1>Factor Models <h1></h1>
+<p><em>Alpha</em>, the market excess return, is a measure of the active return on an investment, the performance of that investment compared with a suitable market index. An alpha of 1% means the investment's return on investment over a selected period of time was 1% better than the market during that same period. In CAPM model, it's the intercept of sercurity characteristic line (SCL): $$SCL: R_{i,t} - R_f = \alpha_i + \beta_i(R_{M,t} - R_f) + \epsilon_{i,t}$$</p>
 <p>Traders and investors justifiably like to chase after <em>"alphas"</em> —— return that are not known to be associated with factor risks. Earning alpha is almost riskless arbitrage, because their risks can be reduced to zero by increasing diversification. The more stocks one includes in a portfolio with positive alpha, the smaller (white noise) the risk compared to its return.</p>
 <p>On the other hand, factor risk cannot be diversified away. No matter how many value stocks you add to the long side of a portfolio, and how many growth stocks you add to the short side (<em>long-short market-neural portfolio - value stocks offer better long-term returns than growth stocks</em>), the factor risk remains unchanged. In fact, their risks are unlike the random flunctuation of white noise, the factor risk of each stock is both <strong><em>serially</em></strong> and <strong><em>cross-sectionally</em></strong> correlated over a period of time.</p>
 <hr />
-<h4 id="Time-series-Factor"><em>Time-series Factor</em><a class="anchor-link" href="#Time-series-Factor">¶</a></h4><p>So-called time-series factor is vary from time to time, but they do not vary across different stocks or financial assets. e.g., the market return and the value-minus-growth (HML, returns of basket of high <em>book-to-market</em> stocks minus that of a basket of low <em>book-to-market</em> stocks) are examples of time-series factors. Such a long-short portfolio whose returns represent a time-series factor is called a "hedge" portfolio. What do vary across different stocks are their returns in respone to this factor. This response is called <strong><em>factor loading</em></strong>, which just a regression coefficient, and it's dimensionless (meaning won't change overtime). Mathmatically, it can be written as below:</p>
+<h4><em>Time-series Factor</em> <h2></h2></h4>
+<p>So-called time-series factor is vary from time to time, but they do not vary across different stocks or financial assets. e.g., the market return and the value-minus-growth (HML, returns of basket of high <em>book-to-market</em> stocks minus that of a basket of low <em>book-to-market</em> stocks) are examples of time-series factors. Such a long-short portfolio whose returns represent a time-series factor is called a "hedge" portfolio. What do vary across different stocks are their returns in respone to this factor. This response is called <strong><em>factor loading</em></strong>, which just a regression coefficient, and it's dimensionless (meaning won't change overtime). Mathmatically, it can be written as below:</p>
 <p>$$ Return(t, s) - r_{risk  free} = \alpha(t, s) + \beta_1(s)*FactorRet_1(t) + \beta_2(s)*FactorRet_2(t) + ... + \epsilon(t, s)$$, where $s$ is the stock.</p>
 <p>(<em>To my understanding, one can understand this factor model with the following 'sound-like' logics, investing in values stocks is better than growth stocks, afterall, Warrant Buffet is rich; also small cap stock has more space to grow compared to large cap, and nowadays, investors believe that small cap stocks are no more risky than large cap stocks as long as they are sufficiently diversified. Thus, it makes sense these invisible factors generate returns as long as there's risk comes along</em>)</p>
 <p>The equation above we still put $\alpha$ in it, it is because there might be still some arbitrage time-varying returns that is not be driven by common factors. In arbitrage free market, we can consider it to be zero, or a constant otherwise. Also the equation as can be seens is a descriptive model, meaning it explains how returns correlated with those factors. which allow us uses this as risk management, e.g., if we found the a strategy or portfolio regress(loads) positive to volatility factor change, then we can construct a hedge portfolio that loads negative to volatility change, such that we have minimum exposure to volatility.</p>
 <p>While for predictive model, we can turn the aboved equation into this:
 $$ Return(t+1, s) - r_{risk  free} = \alpha(t, s) + \beta_1(s)*FactorRet_1(t) + \beta_2(s)*FactorRet_2(t) + ... + \epsilon(t, s)$$</p>
 <p>we can use <em>t+1</em> return to perform a regression to get the correlated <em>factor loading</em> in order for future prediction.</p>
-<h4 id="Using-Fama-French-factors-to-predict-next-day-return"><em>Using Fama-French factors to predict next day return</em><a class="anchor-link" href="#Using-Fama-French-factors-to-predict-next-day-return">¶</a></h4><p>On top opf CAPM model, Fama-French proposed three factor model to explain stock return:</p>
+<hr />
+<h4><em>Using Fama-French factors to predict next day return</em> <h2></h2></h4>
+<p>On top opf CAPM model, Fama-French proposed three factor model to explain stock return:</p>
 <pre><code>* market risk (CAPM)
 * the outperformance of small vs big companiese
 * the outperformance of high book-to-market vs low book-to-market
@@ -1100,7 +1104,7 @@ $$ Return(t+1, s) - r_{risk  free} = \alpha(t, s) + \beta_1(s)*FactorRet_1(t) + 
 $$ r = r_f + \beta_1(r_m-r_f) + \beta_2SMB + \beta_3HML + \alpha + \epsilon$$</p>
 <p>To construct factor model:</p>
 <p><em>Step 1. Sort the index member by their cap</em></p>
-</div>
+</h1></div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
