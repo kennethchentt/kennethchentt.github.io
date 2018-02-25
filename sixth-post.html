@@ -35,7 +35,8 @@
 
 
 
-        <meta name="tags" contents="python" />
+        <meta name="tags" contents="Python" />
+        <meta name="tags" contents="Machine Learning" />
 
 
 			<meta property="og:locale" content="en">
@@ -43,11 +44,11 @@
 
 	<meta property="og:type" content="article">
 	<meta property="article:author" content="">
-	<meta property="og:url" content="/first-post.html">
-	<meta property="og:title" content="Fench-Fama's Factor Model">
+	<meta property="og:url" content="/sixth-post.html">
+	<meta property="og:title" content="How To Apply Feature Selection">
 	<meta property="og:description" content="">
 	<meta property="og:image" content="/">
-	<meta property="article:published_time" content="2016-06-08 20:00:00+08:00">
+	<meta property="article:published_time" content="2018-02-08 20:00:00+08:00">
 </head>
 
 <body>
@@ -83,10 +84,10 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
-                        <h1>Fench-Fama's Factor Model</h1>
+                        <h1>How To Apply Feature Selection</h1>
                         <span class="meta">Posted by
                                 <a href="/author/kenneth-chen.html">Kenneth Chen</a>
-                             on Wed 08 June 2016
+                             on Thu 08 February 2018
                         </span>
                         
                     </div>
@@ -1077,77 +1078,137 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1>Factor Models <h1></h1>
-<p><em>Alpha</em>, the market excess return, is a measure of the active return on an investment, the performance of that investment compared with a suitable market index. An alpha of 1% means the investment's return on investment over a selected period of time was 1% better than the market during that same period. In CAPM model, it's the intercept of sercurity characteristic line (SCL): $$SCL: R_{i,t} - R_f = \alpha_i + \beta_i(R_{M,t} - R_f) + \epsilon_{i,t}$$</p>
-<p>Traders and investors justifiably like to chase after <em>"alphas"</em> —— return that are not known to be associated with factor risks. Earning alpha is almost riskless arbitrage, because their risks can be reduced to zero by increasing diversification. The more stocks one includes in a portfolio with positive alpha, the smaller (white noise) the risk compared to its return.</p>
-<p>On the other hand, factor risk cannot be diversified away. No matter how many value stocks you add to the long side of a portfolio, and how many growth stocks you add to the short side (<em>long-short market-neural portfolio - value stocks offer better long-term returns than growth stocks</em>), the factor risk remains unchanged. In fact, their risks are unlike the random flunctuation of white noise, the factor risk of each stock is both <strong><em>serially</em></strong> and <strong><em>cross-sectionally</em></strong> correlated over a period of time.</p>
+<h1 id="Why,-How-and-When-to-apply-Feature-Selection">Why, How and When to apply Feature Selection<a class="anchor-link" href="#Why,-How-and-When-to-apply-Feature-Selection">¶</a></h1><p>为何要做 Feature Selection ？目的就是为了提取高质量有解释能力的 feature ，最终目的就是在 feature 数量和质量之间取得平衡从而提高模型输出的可靠性。因为过多的数量会导致：</p>
+<ol>
+<li>随着 feature 数量的增加，训练时间指数增长。</li>
+<li>模型会随着 feature 数量增长而出现 <em>overfitting</em>。</li>
+</ol>
+<p>好的 Feature Selction 方法可以减少模型输入维度的同时不失去太多信息。除了 PCA 外，以下我们再讨论几个比较受欢迎的方法：</p>
+<ul>
+<li><em>Filter Methods</em></li>
+<li><em>Wrapper Methods</em></li>
+<li><em>Embedded Methos</em></li>
+</ul>
 <hr />
-<h4><em>Time-series Factor</em> <h2></h2></h4>
-<p>So-called time-series factor is vary from time to time, but they do not vary across different stocks or financial assets. e.g., the market return and the value-minus-growth (HML, returns of basket of high <em>book-to-market</em> stocks minus that of a basket of low <em>book-to-market</em> stocks) are examples of time-series factors. Such a long-short portfolio whose returns represent a time-series factor is called a "hedge" portfolio. What do vary across different stocks are their returns in respone to this factor. This response is called <strong><em>factor loading</em></strong>, which just a regression coefficient, and it's dimensionless (meaning won't change overtime). Mathmatically, it can be written as below:</p>
-<p>$$ Return(t, s) - r_{risk  free} = \alpha(t, s) + \beta_1(s)*FactorRet_1(t) + \beta_2(s)*FactorRet_2(t) + ... + \epsilon(t, s)$$, where $s$ is the stock.</p>
-<p>(<em>To my understanding, one can understand this factor model with the following 'sound-like' logics, investing in values stocks is better than growth stocks, afterall, Warrant Buffet is rich; also small cap stock has more space to grow compared to large cap, and nowadays, investors believe that small cap stocks are no more risky than large cap stocks as long as they are sufficiently diversified. Thus, it makes sense these invisible factors generate returns as long as there's risk comes along</em>)</p>
-<p>The equation above we still put $\alpha$ in it, it is because there might be still some arbitrage time-varying returns that is not be driven by common factors. In arbitrage free market, we can consider it to be zero, or a constant otherwise. Also the equation as can be seens is a descriptive model, meaning it explains how returns correlated with those factors. which allow us uses this as risk management, e.g., if we found the a strategy or portfolio regress(loads) positive to volatility factor change, then we can construct a hedge portfolio that loads negative to volatility change, such that we have minimum exposure to volatility.</p>
-<p>While for predictive model, we can turn the aboved equation into this:
-$$ Return(t+1, s) - r_{risk  free} = \alpha(t, s) + \beta_1(s)*FactorRet_1(t) + \beta_2(s)*FactorRet_2(t) + ... + \epsilon(t, s)$$</p>
-<p>we can use <em>t+1</em> return to perform a regression to get the correlated <em>factor loading</em> in order for future prediction.</p>
-<hr />
-<h4><em>Using Fama-French factors to predict next day return</em> <h2></h2></h4>
-<p>On top opf CAPM model, Fama-French proposed three factor model to explain stock return:</p>
-<pre><code>* market risk (CAPM)
-* the outperformance of small vs big companiese
-* the outperformance of high book-to-market vs low book-to-market
-
-</code></pre>
-<p>which can be written in formula:
-$$ r = r_f + \beta_1(r_m-r_f) + \beta_2SMB + \beta_3HML + \alpha + \epsilon$$</p>
-<p>To construct factor model:</p>
-<p><em>Step 1. Sort the index member by their cap</em></p>
-</h1></div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [1]:</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
-</pre></div>
-</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Filter-Methods">Filter Methods<a class="anchor-link" href="#Filter-Methods">¶</a></h3><p>用于计算 features 对模型的重要性 —— feature 与目标变量的关系</p>
+<h4 id="1.-F-Test">1. F-Test<a class="anchor-link" href="#1.-F-Test">¶</a></h4><p><em>F-Test</em> 是一个统计测试，用于模型间的比较，来解释模型间差别是否显著。它的做法是 <em>F-Test</em> 假设两个模型<strong>X</strong> 和 <strong>Y</strong>，其中<strong>X</strong> 是由一个恒量产生，而<strong>Y</strong> 则是由此恒量和一个 feature 产生。两个模型间的输出差异用 <em>least square error</em> 去判断是否显著。</p>
+<p>Scikit learn 提供了 <strong>Selecting K best</strong>  features 来实现</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [9]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example to get PB ratio from bloomberg and store it into database</span>
-<span class="kn">from</span> <span class="nn">blpapiwrapper</span> <span class="k">import</span> <span class="n">BLP</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">sqlite3</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># for regression task</span>
+<span class="n">sklearn</span><span class="o">.</span><span class="n">feature_selection</span><span class="o">.</span><span class="n">f_regresion</span>
 
-<span class="n">bbg</span> <span class="o">=</span> <span class="n">BLP</span><span class="p">()</span>
-<span class="n">fields</span> <span class="o">=</span> <span class="s1">'PX_TO_BOOK_RATIO'</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2005</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2017</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">27</span><span class="p">)</span>
-
-<span class="n">stocklist</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'data/SHSZ300MEMB.csv'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">)</span>
-
-
-<span class="k">for</span> <span class="n">stock</span> <span class="ow">in</span> <span class="n">stocklist</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
-    <span class="n">flds_df</span> <span class="o">=</span> <span class="n">bbg</span><span class="o">.</span><span class="n">bdh</span><span class="p">(</span><span class="n">stock</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> 
-    <span class="n">flds_df</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'PB_Ratio'</span><span class="p">]</span>
-    <span class="n">flds_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'Date'</span>
-    <span class="n">flds_df</span><span class="p">[</span><span class="s1">'Ticker'</span><span class="p">]</span> <span class="o">=</span> <span class="n">stock</span>
-    <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'data/CHINASTOCK.db'</span><span class="p">)</span> <span class="k">as</span> <span class="n">cnx</span><span class="p">:</span>
-        <span class="n">flds_df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s1">'PriceToBook'</span><span class="p">,</span> <span class="n">cnx</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">'append'</span><span class="p">)</span>
-    <span class="n">cnx</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="nb">print</span> <span class="n">stock</span><span class="o">+</span><span class="s1">' done'</span>
-       
-<span class="n">bbg</span><span class="o">.</span><span class="n">closeSession</span><span class="p">()</span>
-<span class="nb">print</span> <span class="s1">'**********All Done*******'</span>
+<span class="c1"># for classfication task</span>
+<span class="n">sklearn</span><span class="o">.</span><span class="n">feature_selection</span><span class="o">.</span><span class="n">f_classif</span>
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>但是 <em>F-Test</em> 也有它的弊端，就是它只善于 capture features 和 label 之间的线性关系，它的做法是对于高相关的 feature 给高分，反之低分。然而相关性具有欺骗性，它并不能很好的 capture 强非线性关系。</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="title" src="img/summary statistics.png" />
+(<em>Francis Anscombe illustrates how four distinct datasets have same mean, variance and correlation to emphasize ‘summary statistics’ does not completely describe the datasets and can be quite deceptive.</em>)</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="2.-Mutual-Information">2. Mutual Information<a class="anchor-link" href="#2.-Mutual-Information">¶</a></h4><p><em>Mutual Information</em> 是用来衡量两个变量的相互独立程度。如果两个变量 <strong>X</strong> 和 <strong>Y</strong>：</p>
+<ol>
+<li>如果 <strong>X</strong> 和 <strong>Y</strong> 是完全独立，即不能通过 <strong>X</strong> 推出 <strong>Y</strong>，反之亦然，则它们的 mutual information 为0.</li>
+<li>如果 <strong>X</strong> 是 <strong>Y</strong> 的函数，即通过 <strong>Y</strong> 可求出 <strong>X</strong>， 则它们的 mutual information 为1.</li>
+<li>如果 Y=f(X,Z,M,N), 则 0 < mutual information < 1.</li>
+</ol>
+<p><em>Mutual inforamtion</em> 比 <em>F-Test</em> 更好地能 capture 非线性关系。 Sklearn提供以下来实现</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># for regression task</span>
+<span class="n">sklearn</span><span class="o">.</span><span class="n">feature_selection</span><span class="o">.</span><span class="n">mutual_info_regression</span>
+
+<span class="c1"># for classfication task</span>
+<span class="n">sklearn</span><span class="o">.</span><span class="n">feature_selection</span><span class="o">.</span><span class="n">mutual_info_classif</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="title" src="img/FTest.png" />
+<em>F-Test captures the linear relationship well. Mutual Information captures any kind of relationship between two variables.</em></p>
+<h4 id="3.-Variance-Threshold">3. Variance Threshold<a class="anchor-link" href="#3.-Variance-Threshold">¶</a></h4><p>此方法是当 features 的 variance 低于一定的 cutoff 的时候将其移除。背后idea是当一个 feature 其内部过于相似或者并无太vary，此 feature 一般并不具有多少的预测能力.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>sklearn.feature_selection.VarianceThreshold</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr />
+<h3 id="Wrapper-Methods">Wrapper Methods<a class="anchor-link" href="#Wrapper-Methods">¶</a></h3><p>Wrapper Methods 选择 feature 一些子集，以此测量模型的 performance.</p>
+<h4 id="1.-Foward-Search">1. Foward Search<a class="anchor-link" href="#1.-Foward-Search">¶</a></h4><p>此方法可以帮你逐一以输出模型 performance寻找到最优的 feature，并逐一将其加入 featuer 子集</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img alt="title" src="img/forwardsearch.png" />
+<em>Forward Selection method when used to select the best 3 features out of 5 features, Feature 3, 2 and 5 as the best subset.</em></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>当数据有 n 个 features时：</p>
+<pre><code>> 第一轮以每一个feature n 创建n个模型，模型输出预测能力最好的那个模型相对应的feature 被选出加入 feature池
+> 第二轮以剩下的feature 创建n-1个模型，模型输出预测能力最好的那个模型相对应的feature 被选出加入 feature池
+> 第m轮以剩下的feature 创建n-m个模型，模型输出预测能力最好的那个模型相对应的feature 被选出加入 feature池, 直至 m 个 features被选完为止</code></pre>
 </div>
 </div>
 </div>
